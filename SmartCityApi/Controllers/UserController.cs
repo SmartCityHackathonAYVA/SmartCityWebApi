@@ -29,7 +29,7 @@ public class UserController : ControllerBase
 
 	[Route("Register")]
 	[HttpPost]
-	public IActionResult Register([FromBody]User user)
+	public async Task<IActionResult> Register([FromBody]User user)
 	{
 		if (_context.Users.Any(u => u.Email == user.Email))
 		{
@@ -38,6 +38,7 @@ public class UserController : ControllerBase
 		else
 		{
 			return Ok(user);
+			await _context.SaveChangesAsync();
 		}
 	}
 }
