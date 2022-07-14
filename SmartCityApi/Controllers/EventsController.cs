@@ -12,55 +12,55 @@ namespace SmartCityApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NewsController : ControllerBase
+    public class EventsController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public NewsController(ApplicationContext context)
+        public EventsController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: api/News
+        // GET: api/Events
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<News>>> GetNews()
+        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
         {
-          if (_context.News == null)
+          if (_context.Events == null)
           {
               return NotFound();
           }
-            return await _context.News.ToListAsync();
+            return await _context.Events.ToListAsync();
         }
 
-        // GET: api/News/5
+        // GET: api/Events/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<News>> GetNews(int id)
+        public async Task<ActionResult<Event>> GetEvent(int id)
         {
-          if (_context.News == null)
+          if (_context.Events == null)
           {
               return NotFound();
           }
-            var news = await _context.News.FindAsync(id);
+            var @event = await _context.Events.FindAsync(id);
 
-            if (news == null)
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return news;
+            return @event;
         }
 
-        // PUT: api/News/5
+        // PUT: api/Events/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNews(int id, News news)
+        public async Task<IActionResult> PutEvent(int id, Event @event)
         {
-            if (id != news.Id)
+            if (id != @event.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(news).State = EntityState.Modified;
+            _context.Entry(@event).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace SmartCityApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!NewsExists(id))
+                if (!EventExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace SmartCityApi.Controllers
             return NoContent();
         }
 
-        // POST: api/News
+        // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<News>> PostNews(News news)
+        public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
-          if (_context.News == null)
+          if (_context.Events == null)
           {
-              return Problem("Entity set 'ApplicationContext.News'  is null.");
+              return Problem("Entity set 'ApplicationContext.Events'  is null.");
           }
-            _context.News.Add(news);
+            _context.Events.Add(@event);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNews", new { id = news.Id }, news);
+            return CreatedAtAction("GetEvent", new { id = @event.Id }, @event);
         }
 
-        // DELETE: api/News/5
+        // DELETE: api/Events/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNews(int id)
+        public async Task<IActionResult> DeleteEvent(int id)
         {
-            if (_context.News == null)
+            if (_context.Events == null)
             {
                 return NotFound();
             }
-            var news = await _context.News.FindAsync(id);
-            if (news == null)
+            var @event = await _context.Events.FindAsync(id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            _context.News.Remove(news);
+            _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool NewsExists(int id)
+        private bool EventExists(int id)
         {
-            return (_context.News?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Events?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

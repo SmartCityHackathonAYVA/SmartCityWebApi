@@ -12,55 +12,55 @@ namespace SmartCityApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NewsController : ControllerBase
+    public class CommentsController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public NewsController(ApplicationContext context)
+        public CommentsController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: api/News
+        // GET: api/Comments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<News>>> GetNews()
+        public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
         {
-          if (_context.News == null)
+          if (_context.Comments == null)
           {
               return NotFound();
           }
-            return await _context.News.ToListAsync();
+            return await _context.Comments.ToListAsync();
         }
 
-        // GET: api/News/5
+        // GET: api/Comments/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<News>> GetNews(int id)
+        public async Task<ActionResult<Comment>> GetComment(int id)
         {
-          if (_context.News == null)
+          if (_context.Comments == null)
           {
               return NotFound();
           }
-            var news = await _context.News.FindAsync(id);
+            var comment = await _context.Comments.FindAsync(id);
 
-            if (news == null)
+            if (comment == null)
             {
                 return NotFound();
             }
 
-            return news;
+            return comment;
         }
 
-        // PUT: api/News/5
+        // PUT: api/Comments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNews(int id, News news)
+        public async Task<IActionResult> PutComment(int id, Comment comment)
         {
-            if (id != news.Id)
+            if (id != comment.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(news).State = EntityState.Modified;
+            _context.Entry(comment).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace SmartCityApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!NewsExists(id))
+                if (!CommentExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace SmartCityApi.Controllers
             return NoContent();
         }
 
-        // POST: api/News
+        // POST: api/Comments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<News>> PostNews(News news)
+        public async Task<ActionResult<Comment>> PostComment(Comment comment)
         {
-          if (_context.News == null)
+          if (_context.Comments == null)
           {
-              return Problem("Entity set 'ApplicationContext.News'  is null.");
+              return Problem("Entity set 'ApplicationContext.Comments'  is null.");
           }
-            _context.News.Add(news);
+            _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNews", new { id = news.Id }, news);
+            return CreatedAtAction("GetComment", new { id = comment.Id }, comment);
         }
 
-        // DELETE: api/News/5
+        // DELETE: api/Comments/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNews(int id)
+        public async Task<IActionResult> DeleteComment(int id)
         {
-            if (_context.News == null)
+            if (_context.Comments == null)
             {
                 return NotFound();
             }
-            var news = await _context.News.FindAsync(id);
-            if (news == null)
+            var comment = await _context.Comments.FindAsync(id);
+            if (comment == null)
             {
                 return NotFound();
             }
 
-            _context.News.Remove(news);
+            _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool NewsExists(int id)
+        private bool CommentExists(int id)
         {
-            return (_context.News?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Comments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

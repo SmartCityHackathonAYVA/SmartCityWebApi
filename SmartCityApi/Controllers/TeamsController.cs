@@ -12,55 +12,55 @@ namespace SmartCityApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NewsController : ControllerBase
+    public class TeamsController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public NewsController(ApplicationContext context)
+        public TeamsController(ApplicationContext context)
         {
             _context = context;
         }
 
-        // GET: api/News
+        // GET: api/Teams
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<News>>> GetNews()
+        public async Task<ActionResult<IEnumerable<Team>>> GetTeams()
         {
-          if (_context.News == null)
+          if (_context.Teams == null)
           {
               return NotFound();
           }
-            return await _context.News.ToListAsync();
+            return await _context.Teams.ToListAsync();
         }
 
-        // GET: api/News/5
+        // GET: api/Teams/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<News>> GetNews(int id)
+        public async Task<ActionResult<Team>> GetTeam(int id)
         {
-          if (_context.News == null)
+          if (_context.Teams == null)
           {
               return NotFound();
           }
-            var news = await _context.News.FindAsync(id);
+            var team = await _context.Teams.FindAsync(id);
 
-            if (news == null)
+            if (team == null)
             {
                 return NotFound();
             }
 
-            return news;
+            return team;
         }
 
-        // PUT: api/News/5
+        // PUT: api/Teams/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNews(int id, News news)
+        public async Task<IActionResult> PutTeam(int id, Team team)
         {
-            if (id != news.Id)
+            if (id != team.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(news).State = EntityState.Modified;
+            _context.Entry(team).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace SmartCityApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!NewsExists(id))
+                if (!TeamExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace SmartCityApi.Controllers
             return NoContent();
         }
 
-        // POST: api/News
+        // POST: api/Teams
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<News>> PostNews(News news)
+        public async Task<ActionResult<Team>> PostTeam(Team team)
         {
-          if (_context.News == null)
+          if (_context.Teams == null)
           {
-              return Problem("Entity set 'ApplicationContext.News'  is null.");
+              return Problem("Entity set 'ApplicationContext.Teams'  is null.");
           }
-            _context.News.Add(news);
+            _context.Teams.Add(team);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNews", new { id = news.Id }, news);
+            return CreatedAtAction("GetTeam", new { id = team.Id }, team);
         }
 
-        // DELETE: api/News/5
+        // DELETE: api/Teams/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNews(int id)
+        public async Task<IActionResult> DeleteTeam(int id)
         {
-            if (_context.News == null)
+            if (_context.Teams == null)
             {
                 return NotFound();
             }
-            var news = await _context.News.FindAsync(id);
-            if (news == null)
+            var team = await _context.Teams.FindAsync(id);
+            if (team == null)
             {
                 return NotFound();
             }
 
-            _context.News.Remove(news);
+            _context.Teams.Remove(team);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool NewsExists(int id)
+        private bool TeamExists(int id)
         {
-            return (_context.News?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Teams?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
