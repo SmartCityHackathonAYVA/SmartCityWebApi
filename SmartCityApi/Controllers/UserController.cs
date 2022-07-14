@@ -28,6 +28,7 @@ public class UserController : ControllerBase
 	}
 
 	[Route("Register")]
+	[HttpPost]
 	public IActionResult Register([FromBody]User user)
 	{
 		if (_context.Users.Any(u => u.Email == user.Email))

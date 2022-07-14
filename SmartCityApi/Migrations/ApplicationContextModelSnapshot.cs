@@ -22,6 +22,36 @@ namespace SmartCityApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("CategoryUser", b =>
+                {
+                    b.Property<int>("CategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoriesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("CategoryUser");
+                });
+
+            modelBuilder.Entity("EventUser", b =>
+                {
+                    b.Property<int>("EventsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EventsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("EventUser");
+                });
+
             modelBuilder.Entity("SmartCityApi.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -34,12 +64,7 @@ namespace SmartCityApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Categories");
                 });
@@ -93,6 +118,9 @@ namespace SmartCityApi.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrganizerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -101,14 +129,9 @@ namespace SmartCityApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Events");
                 });
@@ -132,6 +155,10 @@ namespace SmartCityApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -225,11 +252,34 @@ namespace SmartCityApi.Migrations
                     b.ToTable("TeamUser");
                 });
 
-            modelBuilder.Entity("SmartCityApi.Models.Category", b =>
+            modelBuilder.Entity("CategoryUser", b =>
                 {
+                    b.HasOne("SmartCityApi.Models.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SmartCityApi.Models.User", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("UserId");
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EventUser", b =>
+                {
+                    b.HasOne("SmartCityApi.Models.Event", null)
+                        .WithMany()
+                        .HasForeignKey("EventsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SmartCityApi.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SmartCityApi.Models.Comment", b =>
@@ -255,15 +305,7 @@ namespace SmartCityApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartCityApi.Models.User", "User")
-                        .WithMany("Events")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SmartCityApi.Models.News", b =>
@@ -303,13 +345,6 @@ namespace SmartCityApi.Migrations
             modelBuilder.Entity("SmartCityApi.Models.News", b =>
                 {
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("SmartCityApi.Models.User", b =>
-                {
-                    b.Navigation("Categories");
-
-                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }
