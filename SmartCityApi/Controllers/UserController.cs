@@ -17,12 +17,26 @@ public class UserController : ControllerBase
 	[Route("Login")]
 	public IActionResult Login(string login,string password)
 	{
-		return Ok();
+		if (_context.Users.Any(u => u.Email == login && u.Password == password))
+		{
+			return Ok(_context.Users.Where(u => u.Email == login && u.Password == password));
+		}
+		else
+		{
+			return BadRequest("No user");
+		}
 	}
 
 	[Route("Register")]
 	public IActionResult Register([FromBody]User user)
 	{
-		return Ok();
+		if (_context.Users.Any(u => u.Email == user.Email))
+		{
+			return BadRequest("Email already exist");
+		}
+		else
+		{
+			return Ok(user);
+		}
 	}
 }
