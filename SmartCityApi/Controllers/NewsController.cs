@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartCityApi.Db;
@@ -14,9 +10,9 @@ namespace SmartCityApi.Controllers
     [ApiController]
     public class NewsController : ControllerBase
     {
-        private readonly NewsContext _context;
+        private readonly ApplicationContext _context;
 
-        public NewsController(NewsContext context)
+        public NewsController(ApplicationContext context)
         {
             _context = context;
         }

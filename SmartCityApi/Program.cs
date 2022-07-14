@@ -9,8 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<NewsContext>(opt =>
-    opt.UseInMemoryDatabase("NewsList"));
+builder.Services.AddDbContext<ApplicationContext>(opt =>
+    opt.UseSqlServer("NewsList"));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CORSPolicy",

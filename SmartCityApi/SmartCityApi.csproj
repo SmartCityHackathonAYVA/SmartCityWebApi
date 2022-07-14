@@ -24,4 +24,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\News\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\News\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\News\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\News\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\News\Index.cshtml" />
+  </ItemGroup>
+
 </Project>
