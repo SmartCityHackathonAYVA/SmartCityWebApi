@@ -23,13 +23,13 @@ public class UserController : ControllerBase
 		}
 		else
 		{
-			return BadRequest("No user");
+			return NotFound("No user found");
 		}
 	}
 
 	[Route("Register")]
 	[HttpPost]
-	public async Task<IActionResult> Register([FromBody]User user)
+	public async Task<IActionResult> Register(User user)
 	{
 		if (_context.Users.Any(u => u.Email == user.Email))
 		{
@@ -37,8 +37,10 @@ public class UserController : ControllerBase
 		}
 		else
 		{
-			return Ok(user);
+			user.Id = 0;
+			_context.Users.Add(user);
 			await _context.SaveChangesAsync();
+			return Ok(user);
 		}
 	}
 }
