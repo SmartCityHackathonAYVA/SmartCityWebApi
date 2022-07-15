@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartCityApi.Db;
 using SmartCityApi.Models;
 
@@ -19,7 +20,7 @@ public class UserController : ControllerBase
     {
         if (_context.Users.Any(u => u.Email == login && u.Password == password))
         {
-            return Ok(_context.Users.Where(u => u.Email == login && u.Password == password));
+            return Ok(_context.Users.Include(user => user.Categories).Include(user => user.Events).Include(user => user.Teams).Where(u => u.Email == login && u.Password == password));
         }
         else
         {
