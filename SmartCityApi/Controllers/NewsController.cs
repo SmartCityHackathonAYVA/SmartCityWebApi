@@ -96,25 +96,6 @@ namespace SmartCityApi.Controllers
             return CreatedAtAction("GetNews", new { id = news.Id }, news);
         }
 
-        // DELETE: api/News/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNews(int id)
-        {
-            if (_context.News == null)
-            {
-                return NotFound();
-            }
-            var news = await _context.News.FindAsync(id);
-            if (news == null)
-            {
-                return NotFound();
-            }
-
-            _context.News.Remove(news);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
 
         private bool NewsExists(int id)
         {

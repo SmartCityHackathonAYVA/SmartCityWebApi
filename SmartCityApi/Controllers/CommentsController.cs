@@ -96,25 +96,6 @@ namespace SmartCityApi.Controllers
             return CreatedAtAction("GetComment", new { id = comment.Id }, comment);
         }
 
-        // DELETE: api/Comments/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComment(int id)
-        {
-            if (_context.Comments == null)
-            {
-                return NotFound();
-            }
-            var comment = await _context.Comments.FindAsync(id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
 
         private bool CommentExists(int id)
         {

@@ -96,25 +96,6 @@ namespace SmartCityApi.Controllers
             return CreatedAtAction("GetEvent", new { id = @event.Id }, @event);
         }
 
-        // DELETE: api/Events/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvent(int id)
-        {
-            if (_context.Events == null)
-            {
-                return NotFound();
-            }
-            var @event = await _context.Events.FindAsync(id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            _context.Events.Remove(@event);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
 
         private bool EventExists(int id)
         {

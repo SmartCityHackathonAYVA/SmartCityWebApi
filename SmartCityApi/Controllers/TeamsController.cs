@@ -96,25 +96,6 @@ namespace SmartCityApi.Controllers
             return CreatedAtAction("GetTeam", new { id = team.Id }, team);
         }
 
-        // DELETE: api/Teams/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTeam(int id)
-        {
-            if (_context.Teams == null)
-            {
-                return NotFound();
-            }
-            var team = await _context.Teams.FindAsync(id);
-            if (team == null)
-            {
-                return NotFound();
-            }
-
-            _context.Teams.Remove(team);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
 
         private bool TeamExists(int id)
         {

@@ -13,21 +13,21 @@ public class UserController : ControllerBase
 	{
 		_context = context;
 	}
-	[HttpPost]
-	[Route("Login")]
-	public IActionResult Login(string login,string password)
-	{
-		if (_context.Users.Any(u => u.Email == login && u.Password == password))
-		{
-			return Ok(_context.Users.Where(u => u.Email == login && u.Password == password));
-		}
-		else
-		{
-			return NotFound("No user found");
-		}
-	}
+    [HttpPost]
+    [Route("Login")]
+    public IActionResult Login(string login, string password)
+    {
+        if (_context.Users.Any(u => u.Email == login && u.Password == password))
+        {
+            return Ok(_context.Users.Where(u => u.Email == login && u.Password == password));
+        }
+        else
+        {
+            return NotFound("No user found");
+        }
+    }
 
-	[Route("Register")]
+    [Route("Register")]
 	[HttpPost]
 	public async Task<IActionResult> Register(User user)
 	{

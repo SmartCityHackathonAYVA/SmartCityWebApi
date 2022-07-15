@@ -96,26 +96,6 @@ namespace SmartCityApi.Controllers
             return CreatedAtAction("GetCategory", new { id = category.Id }, category);
         }
 
-        // DELETE: api/Categories/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
-        {
-            if (_context.Categories == null)
-            {
-                return NotFound();
-            }
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
         private bool CategoryExists(int id)
         {
             return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
