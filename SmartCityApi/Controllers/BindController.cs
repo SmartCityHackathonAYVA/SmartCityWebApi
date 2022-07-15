@@ -108,5 +108,70 @@ namespace SmartCityApi.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("GetUserEvent")]
+        public async Task<IActionResult> GetUserEvent(int userId)
+        {
+            var user = await _context.Users.Include(p => p.Events).SingleAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user.Events);
+        }
+
+
+
+
+        [HttpPost]
+        [Route("SetUserTeam")]
+        public async Task<IActionResult> SetUserTeam(int userId, int teamId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var team = await _context.Teams.FindAsync(teamId);
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+            user.Teams.Add(team);
+            await _context.SaveChangesAsync();
+            return Ok("Team added");
+        }
+
+        [HttpPost]
+        [Route("DeleteUserTeam")]
+        public async Task<IActionResult> DeleteUserTeam(int userId, int teamId)
+        {
+            var user = await _context.Users.Include(p => p.Teams).SingleAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.Teams?.Remove(await _context.Teams.SingleAsync(c => c.Id == teamId));
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetUserTeam")]
+        public async Task<IActionResult> GetUserTeam(int userId)
+        {
+            var user = await _context.Users.Include(p => p.Teams).SingleAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user.Teams);
+        }
+
     }
 }
