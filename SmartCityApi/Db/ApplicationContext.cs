@@ -8,6 +8,8 @@ namespace SmartCityApi.Db
         public DbSet<User> Users => Set<User>();
         public DbSet<News> News => Set<News>();
         public DbSet<Category> Categories => Set<Category>();
+        
+        public DbSet<Notification> Notifications => Set<Notification>();
         public DbSet<Comment> Comments => Set<Comment>();
         public DbSet<Event> Events => Set<Event>();
         public DbSet<Team> Teams => Set<Team>();

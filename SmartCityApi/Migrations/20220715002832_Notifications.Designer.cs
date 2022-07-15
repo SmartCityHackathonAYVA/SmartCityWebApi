@@ -12,8 +12,8 @@ using SmartCityApi.Db;
 namespace SmartCityApi.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220714223726_Init")]
-    partial class Init
+    [Migration("20220715002832_Notifications")]
+    partial class Notifications
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,6 +174,27 @@ namespace SmartCityApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("News");
+                });
+
+            modelBuilder.Entity("SmartCityApi.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("PublicationTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("SmartCityApi.Models.Team", b =>

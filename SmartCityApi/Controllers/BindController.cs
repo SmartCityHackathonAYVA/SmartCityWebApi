@@ -42,30 +42,9 @@ namespace SmartCityApi.Controllers
         [Route("DeleteUserCategory")]
         public async Task<IActionResult> DeleteUserCategory(int userId, int categoryId)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories.FirstOrDefaultAsync(u => u.Id == categoryId);
-
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            user.Categories.Remove(category);
-            category.Users.Remove(user);
-
-            //var newCategories = new List<Category>(user.Categories);
-            //newCategories.Remove(category);
-            //user.Categories = newCategories;
-
-
-            //_context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var user = await _context.Users.Include(p => p.Categories).SingleAsync(u => u.Id == userId);
+            user.Categories?.Remove(await _context.Categories.SingleAsync(c => c.Id == categoryId));
+            await  _context.SaveChangesAsync();
             return Ok();
         }
 
