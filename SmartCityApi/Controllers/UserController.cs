@@ -20,7 +20,7 @@ public class UserController : ControllerBase
     {
         if (_context.Users.Any(u => u.Email == login && u.Password == password))
         {
-            return Ok(_context.Users.Include(user => user.Categories).Include(user => user.Events).Include(user => user.Teams).Where(u => u.Email == login && u.Password == password));
+            return Ok(_context.Users.Include(user => user.Categories).Include(user => user.Teams).Include(user => user.Events).Where(u => u.Email == login && u.Password == password));
         }
         else
         {

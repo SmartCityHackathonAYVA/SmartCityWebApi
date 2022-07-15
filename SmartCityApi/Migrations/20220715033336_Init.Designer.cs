@@ -12,8 +12,8 @@ using SmartCityApi.Db;
 namespace SmartCityApi.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220715002832_Notifications")]
-    partial class Notifications
+    [Migration("20220715033336_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
